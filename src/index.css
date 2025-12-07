@@ -244,46 +244,99 @@ body {
   }
 }
 
-/* --- Timer --- */
-.timer-bar {
-  position: relative;
-  height: 56px;
-  background-color: var(--color-text-primary);
+/* --- Controls Row --- */
+.controls-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: auto;
+  /* Push to bottom if space permits */
+}
+
+/* Timer Display */
+.timer-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background-color: #F2F4F6;
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.timer-number {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+
+.timer-label {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Scan Button */
+.scan-btn {
+  flex: 1;
+  height: 64px;
+  background-color: var(--color-text-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: 18px;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
   cursor: pointer;
-  transition: transform 0.1s;
+  transition: transform 0.1s, opacity 0.2s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.timer-bar:active {
+.scan-btn:active {
   transform: scale(0.98);
 }
 
-.timer-progress {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.2);
-  transition: width 1s linear;
-  z-index: 1;
+.scan-btn:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
 }
 
-.timer-text {
-  color: white;
-  font-weight: 600;
-  font-size: 16px;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error/Question States */
+.result-card.ans-\? .result-badge {
+  background-color: var(--color-text-secondary);
+  /* Gray for detection fail */
+}
+
+.result-card.ans-\! .result-badge {
+  background-color: #FF3B30;
+  /* Red for Error */
 }
 
 .timer-icon {
-  margin-left: 6px;
+  /* Deprecated */
+  display: none;
 }
 
 /* --- Settings Modal --- */

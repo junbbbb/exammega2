@@ -40,10 +40,20 @@ function App() {
           // Let's clear it if explicitly nothing found to avoid stale data
           if (data.found === false) {
             // Optional: Toast "No question detected"
+            setResult({
+              answer: '?',
+              explanation: 'No question detected. Try closer.',
+              isError: true
+            });
           }
         }
       } catch (e) {
         console.error("Solve failed", e);
+        setResult({
+          answer: '!',
+          explanation: 'Error analyzing image. Check API Key.',
+          isError: true
+        });
       }
     }
 
@@ -139,10 +149,23 @@ function App() {
         )}
 
         {/* Timer / Manual Trigger */}
-        <div className="timer-bar" onClick={handleManualScan}>
-          <div className="timer-progress" style={{ width: `${(timeLeft / SCAN_INTERVAL) * 100}%` }}></div>
-          <span className="timer-text">{isScanning ? 'Scanning...' : `Auto scan in ${timeLeft}s`}</span>
-          {!isScanning && <Camera size={16} className="timer-icon" />}
+        {/* Controls Layout */}
+        <div className="controls-row">
+          <div className="timer-display">
+            <div className="timer-number">{timeLeft}</div>
+            <span className="timer-label">sec</span>
+          </div>
+
+          <button className="scan-btn" onClick={handleManualScan} disabled={isScanning}>
+            {isScanning ? (
+              <div className="spinner"></div>
+            ) : (
+              <>
+                <Camera size={24} />
+                <span>Scan Now</span>
+              </>
+            )}
+          </button>
         </div>
       </div>
     </div>
